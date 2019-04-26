@@ -86,4 +86,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// add an endpoint that returns all the actions for a project
+// this is a sub-route or sub-resource
+router.get("/:id/actions", async (req, res) => {
+  console.log(req.params.id);
+  try {
+    const actions = await db.getProjectActions(req.params.id);
+    res.status(200).json(actions);
+  } catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: "Error getting the actions for the project"
+    });
+  }
+});
+
 module.exports = router;
