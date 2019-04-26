@@ -6,9 +6,9 @@ const express = require("express"); // define the server; // CommonJS Module Imp
 const helmet = require("helmet");
 const morgan = require("morgan");
 
-//initialize router
-// const actions = require("./data/routers/actions");
-// const projects = require("./data/routers/projects");
+// initialize router
+const actions = require("./data/routers/actions");
+const projects = require("./data/routers/projects");
 
 const server = express(); // instantiate the server; return back the server
 
@@ -18,8 +18,8 @@ server.use(parser); // server now knows how to write JSON. Extends express by us
 server.use(helmet()); // 3rd party security for headers. Hides x powered by Express
 server.use(morgan("dev")); // 3rd party logger (logs i.e. GET /api/hubs 200 35.336 ms - 470)
 
-// server.use("/api/actions", actions);
-// server.use("/api/projects", projects);
+server.use("/api/actions", actions);
+server.use("/api/projects", projects);
 
 server.get("/", (req, res) => {
   //this function is a request handler. It is also middleware.
