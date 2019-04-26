@@ -2,6 +2,19 @@ const express = require("express");
 const db = require("../helpers/actionModel");
 const router = express.Router();
 
+// ===================== CUSTOM MIDDLEWARE =====================
+
+function projectIdCheck(req, res, next) {
+  console.log(req.body);
+  if (!req.body.project_id) {
+    res.status(400).json({
+      message: `There is no project ID for the action`
+    });
+  } else {
+    next();
+  }
+}
+
 // ===================== ACTIONS ENDPOINTS =====================
 
 // this only runs if the url has /api/actions in it
@@ -37,7 +50,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // add new action
-router.post("/", async (req, res) => {
+router.post("/", projectIdCheck, async (req, res) => {
   try {
     const action = await db.insert(req.body);
     res.status(201).json(action);
