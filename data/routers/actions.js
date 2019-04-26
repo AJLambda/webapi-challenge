@@ -5,6 +5,8 @@ const router = express.Router();
 // ===================== ACTIONS ENDPOINTS =====================
 
 // this only runs if the url has /api/actions in it
+
+// get all actions
 router.get("/", (req, res) => {
   db.get()
     .then(actions => {
@@ -15,6 +17,7 @@ router.get("/", (req, res) => {
     });
 });
 
+// get action by ID
 router.get("/:id", async (req, res) => {
   try {
     const action = await db.get(req.params.id);
@@ -29,6 +32,20 @@ router.get("/:id", async (req, res) => {
     console.log(error);
     res.status(500).json({
       message: "Error retrieving the action"
+    });
+  }
+});
+
+// add new action
+router.post("/", async (req, res) => {
+  try {
+    const action = await db.insert(req.body);
+    res.status(201).json(action);
+  } catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: "Error adding the action"
     });
   }
 });

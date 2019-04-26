@@ -2,9 +2,11 @@ const express = require("express");
 const db = require("../helpers/projectModel");
 const router = express.Router();
 
-// ===================== ACTIONS ENDPOINTS =====================
+// ===================== PROJECTS ENDPOINTS =====================
 
-// this only runs if the url has /api/actions in it
+// this only runs if the url has /api/projects in it
+
+// get all projects
 router.get("/", (req, res) => {
   db.get()
     .then(actions => {
@@ -15,6 +17,7 @@ router.get("/", (req, res) => {
     });
 });
 
+// get project by ID
 router.get("/:id", async (req, res) => {
   try {
     const project = await db.get(req.params.id);
@@ -32,4 +35,19 @@ router.get("/:id", async (req, res) => {
     });
   }
 });
+
+// add new project
+router.post("/", async (req, res) => {
+  try {
+    const project = await db.insert(req.body);
+    res.status(201).json(project);
+  } catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: "Error adding the project"
+    });
+  }
+});
+
 module.exports = router;
