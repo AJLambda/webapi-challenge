@@ -15,4 +15,22 @@ router.get("/", (req, res) => {
     });
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    const action = await db.get(req.params.id);
+
+    if (action) {
+      res.status(200).json(action);
+    } else {
+      res.status(404).json({ message: "Action not found" });
+    }
+  } catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: "Error retrieving the action"
+    });
+  }
+});
+
 module.exports = router;
