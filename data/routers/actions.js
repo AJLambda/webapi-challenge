@@ -50,4 +50,22 @@ router.post("/", async (req, res) => {
   }
 });
 
+// update action
+router.put("/:id", async (req, res) => {
+  try {
+    const action = await db.update(req.params.id, req.body);
+    if (action) {
+      res.status(200).json(action);
+    } else {
+      res.status(404).json({ message: "The action could not be found" });
+    }
+  } catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: "Error updating the action"
+    });
+  }
+});
+
 module.exports = router;
