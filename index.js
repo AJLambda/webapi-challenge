@@ -1,14 +1,33 @@
-/*
-play this: https://www.youtube.com/watch?v=d-diB65scQU
+// implement your API here
 
-Sing along:
+//import express from 'express'; // ES2015 Module Import
+const express = require("express"); // define the server; // CommonJS Module Import
 
-here's a little code I wrote, you might want to read it really slow, don't worry be happy
-in every line there may be trouble, but if you worry you make it double, don't worry, be happy
-ain't got no sense of what is REST? just concentrate on learning Express, don't worry, be happy
-your file is getting way too big, bring a Router and make it thin, don't worry, be crafty
-there is no data on that route, just write some code, you'll sort it out… don't worry, just API…
-I need this code, just don't know where, perhaps should make some middleware, don't worry, be happy
+const helmet = require("helmet");
+const morgan = require("morgan");
 
-Go code!
-*/
+//initialize router
+// const actions = require("./data/routers/actions");
+// const projects = require("./data/routers/projects");
+
+const server = express(); // instantiate the server; return back the server
+
+//parses body and add it to req object
+const parser = express.json();
+server.use(parser); // server now knows how to write JSON. Extends express by using middleware
+server.use(helmet()); // 3rd party security for headers. Hides x powered by Express
+server.use(morgan("dev")); // 3rd party logger (logs i.e. GET /api/hubs 200 35.336 ms - 470)
+
+// server.use("/api/actions", actions);
+// server.use("/api/projects", projects);
+
+server.get("/", (req, res) => {
+  //this function is a request handler. It is also middleware.
+  //request and response are positional arguments.
+  res.status(200).send("hello"); // .send is a method of the response object. This sends a quick response back to the client
+});
+
+const port = 3000;
+server.listen(port, () => {
+  console.log(`\n*** Server Running on http://localhost:${port} ***\n`);
+});
