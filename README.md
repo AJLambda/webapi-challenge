@@ -26,13 +26,25 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+  we learned about routers and helpers
+
 - [ ] Describe Middleware?
+
+  Middleware is essentially functions that have access to the request object, the response object, and the next middleware function in the applications cycle. An express application is basically a series of middleware function calls.
+
+  "A function that is invoked by the Express routing layer before the final request handler, and thus sits in the middle between a raw request and the final intended route."
 
 - [ ] Describe a Resource?
 
+  A resource is the backend data that we call and manage in the api
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+  A response status, i.e. 200 for successful.
+
 - [ ] How can we partition our application into sub-applications?
+
+  By creating files that handle specific routes, and by creating files to make our server and port dynamic
 
 ## Project Setup
 
